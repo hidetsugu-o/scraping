@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -12,7 +13,7 @@ import (
 )
 
 func main() {
-	url := "https://fortune.yahoo.co.jp/12astro/20190922/scorpio.html"
+	url := "https://qiita.com/"
 
 	// Getリクエスト
 	res, _ := http.Get(url)
@@ -34,6 +35,15 @@ func main() {
 	doc, _ := goquery.NewDocumentFromReader(reader)
 
 	// titleを抜き出し
-	rslt := doc.Find("title").Text()
-	fmt.Println(rslt)
+	rslt := doc.Find(`script[data-component-name="HomeIndexPage"]`).Text()
+	// fmt.Println(rslt)
+
+	// mapに格納
+	var rsltMap map[string]map[string]interface{}
+	b := []byte(rslt)
+	json.Unmarshal(b, &rsltMap)
+
+	for _, v := range rsltMap["trend"] {
+		fmt.Println(v)
+	}
 }
