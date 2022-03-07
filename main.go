@@ -36,14 +36,13 @@ func main() {
 
 	// titleを抜き出し
 	rslt := doc.Find(`script[data-component-name="HomeIndexPage"]`).Text()
-	// fmt.Println(rslt)
 
-	// mapに格納
-	var rsltMap map[string]map[string]interface{}
-	b := []byte(rslt)
-	json.Unmarshal(b, &rsltMap)
+	// 構造体に格納
+	var rsltMap QiitaServices
+	json.Unmarshal([]byte(rslt), &rsltMap)
 
-	for _, v := range rsltMap["trend"] {
-		fmt.Println(v)
+	for _, edge := range rsltMap.Trend.Trend.Edges {
+		fmt.Println(edge.Node.Title, edge.Node.LinkURL)
 	}
+
 }
