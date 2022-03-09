@@ -42,7 +42,9 @@ func main() {
 	json.Unmarshal([]byte(rslt), &rsltMap)
 
 	for _, edge := range rsltMap.Trend.Trend.Edges {
-		fmt.Println(edge.Node.Title, edge.Node.LinkURL)
+		fmt.Println(edge.Node.Title)
+		fmt.Println(edge.Node.LinkURL)
+		fmt.Println()
 	}
 
 }
