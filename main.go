@@ -16,7 +16,11 @@ func main() {
 	url := "https://qiita.com/"
 
 	// Getリクエスト
-	res, _ := http.Get(url)
+	res, err := http.Get(url)
+	if err != nil {
+		fmt.Println("Failed to send http request", err)
+		return
+	}
 	defer res.Body.Close()
 
 	// 読み取り
